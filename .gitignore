@@ -2,3 +2,4 @@ static/audio
 node_modules
 dataset/clips/*
 config.json
+.vscode
