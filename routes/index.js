@@ -59,7 +59,7 @@ router.post("/like", async (req, res) => {
             return res.redirect("/verify");
         }
 
-        sentence.likes.push(req.ip);
+        sentence.likes.push(clientIP);
         if (sentence.likes.length >= 2) {
             sentence.verified = true;
         }
@@ -74,7 +74,7 @@ router.post("/like", async (req, res) => {
 
 // POST /dislike route
 router.post("/dislike", async (req, res) => {
-    const clientIP = req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"];
+    const clientIP = req.headers["x-forwarded-for"] || req.headers["cf-connecting-ip"] || req.ip;
     const sentenceId = req.body.sentenceId;
     if (!sentenceId) {
         return handleError(res, "Invalid request!", 400);
@@ -90,7 +90,7 @@ router.post("/dislike", async (req, res) => {
             return res.redirect("/verify");
         }
 
-        sentence.dislikes.push(req.ip);
+        sentence.dislikes.push(clientIP);
         await sentence.save();
 
         if (sentence.dislikes.length >= 2) {
