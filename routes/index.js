@@ -42,7 +42,7 @@ const handleError = (res, message = "Server Error", status = 500) => {
 
 // POST /like route
 router.post("/like", async (req, res) => {
-    const clientIP = req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"];
+    const clientIP = req.headers["x-forwarded-for"] || req.headers["cf-connecting-ip"] || req.ip;
 
     const sentenceId = req.body.sentenceId;
     if (!sentenceId) {

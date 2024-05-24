@@ -5,7 +5,7 @@ const router = express.Router();
 const fs = require("fs");
 
 router.get("/", async (req, res, next) => {
-    const userIp = req.ip;
+    const userIp = req.headers["x-forwarded-for"] || req.headers["cf-connecting-ip"] || req.ip;
 
     try {
         const sentence = await Sentence.findOne({
