@@ -9,11 +9,12 @@ const mongoose = require("mongoose");
 
 // Initialize Express app
 const app = express();
-const port = 3550;
+const port = 3000;
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("static"));
+
 app.use(fileupload());
 app.use(cors({ origin: "*" }));
 app.set("view engine", "ejs");
@@ -26,11 +27,13 @@ connection.connect(); // Ensure this method is defined in your connection module
 const indexRoutes = require("./routes/index");
 const recordRoutes = require("./routes/record");
 const uploadRoutes = require("./routes/upload");
-
+const verifyRoutes = require("./routes/verify");
 // Use routes
 app.use("/", indexRoutes);
 app.use("/record", recordRoutes);
 app.use("/upload", uploadRoutes);
+app.use("/verify", verifyRoutes);
+app.use("/clips", express.static(path.join(__dirname, "dataset", "clips")));
 
 // Path to your dataset file
 const DATASET_FILE = path.join(__dirname, "dataset", "dataset.csv");

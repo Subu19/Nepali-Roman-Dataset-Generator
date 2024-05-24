@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Verify Audios</title>
+        <link rel="stylesheet" href="./css/verify.css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <!-- Include WaveSurfer.js library -->
+        <script src="https://unpkg.com/wavesurfer.js"></script>
+    </head>
+    <body>
+        <div class="main">
+            <% if(locals.sentence) {%>
+            <div class="heading text-center">Verify recorded audios</div>
+            <div class="subtitle text-center">These audio were uploaded by the public! They need verification.</div>
+            <div class="title text-center"><%=sentence.text %></div>
+            <div class="spectogram" id="spectogram" onclick="play()">
+                <div class="playIcon" style="font-size: 36px">▶</div>
+            </div>
+            <input type="text" id="audioName" value="<%= sentence.audioName %>" hidden />
+            <div class="buttons">
+                <form action="/like" method="post">
+                    <input type="text" hidden value="<%= sentence._id %>" name="sentenceId" />
+                    <button><i class="material-icons green" style="font-size: 36px">thumb_up</i><label>It's good!</label></button>
+                </form>
+                <form action="/dislike" method="post">
+                    <input type="text" hidden value="<%= sentence._id %>" name="sentenceId" />
+                    <button><i class="material-icons red" style="font-size: 36px">thumb_down</i><label>It's not good!</label></button>
+                </form>
+            </div>
+            <% }else{ %>
+            <div class="heading text-center">Opps! Nothing to Verify</div>
+            <div class="subtitle text-center">Why not add your own! <a href="/record">Record🎙️</a> Or <a href="/write">Write ✏️</a></div>
+            <% } %>
+        </div>
+        <script src="./js/verify.js"></script>
+    </body>
+</html>

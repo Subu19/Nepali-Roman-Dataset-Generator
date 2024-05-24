@@ -76,7 +76,6 @@ function uploadAudio() {
         method: "POST",
         body: formData,
     })
-        .then((response) => response.json())
         .then((data) => {
             console.log("Success:", data);
             disableButton(submitBtn);

@@ -29,10 +29,11 @@ router.post("/", async (req, res) => {
                 return res.status(404).send("Sentence not found");
             }
 
-            sentence.hasAudio = true;
-            await sentence.save();
-
             const uploadPath = path.join(__dirname, "../dataset", "clips", file.name);
+            sentence.hasAudio = true;
+            sentence.audioName = file.name;
+
+            await sentence.save();
             file.mv(uploadPath, (err) => {
                 if (err) {
                     return res.status(500).send(err);

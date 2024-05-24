@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-
+const { Sentence } = require("../utils/models/sentences");
+const fs = require("fs");
 // Route to serve the index page
 router.get("/", (req, res) => {
     res.render("index");
@@ -11,8 +12,6 @@ router.get("/write", (req, res) => {
 });
 
 router.post("/write", async (req, res) => {
-    const { Sentence } = require("../utils/models/sentences");
-
     if (req.body.sentence) {
         const sentenceText = req.body.sentence;
         const check = await Sentence.findOne({ text: sentenceText });
@@ -36,4 +35,74 @@ router.post("/write", async (req, res) => {
     }
 });
 
+// Helper function to handle errors
+const handleError = (res, message = "Server Error", status = 500) => {
+    res.status(status).send(message);
+};
+
+// POST /like route
+router.post("/like", async (req, res) => {
+    const sentenceId = req.body.sentenceId;
+    if (!sentenceId) {
+        return handleError(res, "Invalid request!", 400);
+    }
+
+    try {
+        const sentence = await Sentence.findById(sentenceId);
+        if (!sentence) {
+            return handleError(res, "Sentence not found", 404);
+        }
+
+        if (sentence.likes.includes(req.ip) || sentence.dislikes.includes(req.ip)) {
+            return res.redirect("/verify");
+        }
+
+        sentence.likes.push(req.ip);
+        if (sentence.likes.length >= 2) {
+            sentence.verified = true;
+        }
+
+        await sentence.save();
+        res.redirect("/verify");
+    } catch (error) {
+        console.error(error);
+        handleError(res);
+    }
+});
+
+// POST /dislike route
+router.post("/dislike", async (req, res) => {
+    const sentenceId = req.body.sentenceId;
+    if (!sentenceId) {
+        return handleError(res, "Invalid request!", 400);
+    }
+
+    try {
+        const sentence = await Sentence.findById(sentenceId);
+        if (!sentence) {
+            return handleError(res, "Sentence not found", 404);
+        }
+
+        if (sentence.likes.includes(req.ip) || sentence.dislikes.includes(req.ip)) {
+            return res.redirect("/verify");
+        }
+
+        sentence.dislikes.push(req.ip);
+        await sentence.save();
+
+        if (sentence.dislikes.length >= 2) {
+            const filePath = path.join(__dirname, "../dataset", "clips", sentence.audioName);
+            if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath);
+            }
+
+            await Sentence.deleteOne({ _id: sentence._id });
+        }
+
+        res.redirect("/verify");
+    } catch (error) {
+        console.error(error);
+        handleError(res);
+    }
+});
 module.exports = router;
