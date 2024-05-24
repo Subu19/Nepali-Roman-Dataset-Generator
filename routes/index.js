@@ -42,6 +42,8 @@ const handleError = (res, message = "Server Error", status = 500) => {
 
 // POST /like route
 router.post("/like", async (req, res) => {
+    const clientIP = req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"];
+
     const sentenceId = req.body.sentenceId;
     if (!sentenceId) {
         return handleError(res, "Invalid request!", 400);
@@ -53,7 +55,7 @@ router.post("/like", async (req, res) => {
             return handleError(res, "Sentence not found", 404);
         }
 
-        if (sentence.likes.includes(req.ip) || sentence.dislikes.includes(req.ip)) {
+        if (sentence.likes.includes(clientIP) || sentence.dislikes.includes(clientIP)) {
             return res.redirect("/verify");
         }
 
@@ -72,6 +74,7 @@ router.post("/like", async (req, res) => {
 
 // POST /dislike route
 router.post("/dislike", async (req, res) => {
+    const clientIP = req.headers["cf-connecting-ip"] || req.headers["x-forwarded-for"];
     const sentenceId = req.body.sentenceId;
     if (!sentenceId) {
         return handleError(res, "Invalid request!", 400);
@@ -83,7 +86,7 @@ router.post("/dislike", async (req, res) => {
             return handleError(res, "Sentence not found", 404);
         }
 
-        if (sentence.likes.includes(req.ip) || sentence.dislikes.includes(req.ip)) {
+        if (sentence.likes.includes(clientIP) || sentence.dislikes.includes(clientIP)) {
             return res.redirect("/verify");
         }
 
