@@ -6,10 +6,10 @@ const path = require("path");
 const fs = require("fs");
 const csvWriter = require("csv-write-stream");
 const mongoose = require("mongoose");
-
+const config = require("./config.json");
 // Initialize Express app
 const app = express();
-const port = 3000;
+const port = config.port;
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
