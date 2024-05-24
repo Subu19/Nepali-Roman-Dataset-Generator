@@ -1,0 +1,139 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    background-color: rgb(255, 255, 255);
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.main {
+    margin: 0 auto;
+    max-width: 1000px;
+}
+.text-center {
+    width: 100%;
+    text-align: center;
+}
+.heading {
+    color: black;
+    margin-bottom: 50px;
+}
+.h-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.quote {
+    color: rgb(4, 157, 174);
+    font-size: 30px;
+    margin-bottom: 50px;
+}
+.quote::before {
+    content: '"';
+}
+
+.quote::after {
+    content: '"';
+}
+.recordIcon {
+    height: 60px;
+}
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 300px;
+    align-items: center;
+}
+.btn {
+    height: 50px;
+    background-color: transparent;
+    border: none;
+    margin-top: 20px;
+    transition: 0.2s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    filter: contrast(0.5) sepia(100%) hue-rotate(116deg) brightness(1.4) saturate(0.28);
+}
+.btn img {
+    height: 50px;
+}
+.btn:hover {
+    scale: 1.2;
+    cursor: pointer;
+    filter: none;
+}
+
+label {
+    transform: translateY(30px);
+    opacity: 0;
+    transition: 0.2s;
+}
+.btn:hover label {
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+.recordBtn {
+    filter: grayscale(1);
+}
+.recordBtn:hover {
+    scale: 2;
+    filter: grayscale(0);
+}
+.nextIcon {
+    transition: 0.2s ease-in-out;
+}
+.nextIcon:hover {
+    transform: rotate(180deg);
+}
+.activeRecordBtn {
+    scale: 2;
+    filter: grayscale(0);
+}
+.micIcon {
+    height: 200px;
+}
+.spectogram {
+    height: auto;
+    max-width: 300px;
+    margin: 0 auto;
+    position: relative;
+    border: solid 2px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border-color: rgb(214, 14, 161);
+}
+.playIcon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgb(214, 14, 161);
+    transition: 0.3s;
+    z-index: 100;
+    cursor: pointer;
+}
+
+#mic-select {
+    height: 30px;
+    margin-top: 20px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+    font-size: 18px;
+    padding: 3px;
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border: 1px solid #000000;
+}
+.disabled {
+    filter: contrast(0) sepia(100%) hue-rotate(116deg) brightness(1.4) saturate(0.28);
+}
+.disabled:hover {
+    filter: contrast(0.3) sepia(100%) hue-rotate(116deg) brightness(1.4) saturate(0.28);
+    cursor: not-allowed;
+}

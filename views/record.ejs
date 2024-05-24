@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Record</title>
+        <link rel="stylesheet" href="./css/record.css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+        <!-- Include WaveSurfer.js library -->
+        <script src="https://unpkg.com/wavesurfer.js"></script>
+
+        <!-- Include the record plugin -->
+        <script src="https://unpkg.com/wavesurfer.js/dist/plugins/record.min.js"></script>
+    </head>
+    <body>
+        <div class="main">
+            <% if(locals.sentence){ %>
+            <h1 class="text-center heading">Record New Data</h1>
+            <div class="h-center">
+                <div class="quote"><%=sentence.text %></div>
+                <input type="text" id="sentenceId" hidden value="<%=sentence._id%>" />
+                <img id="micIcon" src="./svg/microphone-2-svgrepo-com.svg" class="micIcon" alt="" />
+                <select id="mic-select">
+                    <option value="" hidden>Select mic</option>
+                </select>
+            </div>
+
+            <div class="spectogram" id="spectogram" onclick="play()">
+                <div class="playIcon" style="font-size: 36px">▶</div>
+            </div>
+            <div class="buttons">
+                <button class="btn nextBtn" onclick="next()">
+                    <img src="./svg/reload-preset-16-svgrepo-com.svg" class="recordIcon nextIcon" alt="" /><label>Reload</label>
+                </button>
+                <button id="recordBtn" class="btn recordBtn" onclick="recordMic()">
+                    <img src="./svg/record-button-svgrepo-com.svg" class="recordIcon" alt="" />
+                </button>
+                <button class="btn submitBtn disabled" id="submitBtn" disabled onclick="uploadAudio()">
+                    <img src="./svg/confirm-svgrepo-com.svg" class="recordIcon" alt="" /> <label>Submit</label>
+                </button>
+            </div>
+            <% }else{ %>
+            <h1 class="text-center heading">Opps! No sentences left!</h1>
+            <h3 class="text-center">You can add your own sentences. Check out <a href="/write">✏️Write</a></h3>
+            <% } %>
+        </div>
+        <script src="./js/record.js"></script>
+    </body>
+</html>

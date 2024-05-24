@@ -1,0 +1,72 @@
+body {
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+    margin: 0px;
+    padding: 0px;
+    background-image: url("https://www.onlygfx.com/wp-content/uploads/2022/03/colorful-sound-wave-equalizer-2.png");
+    background-position: bottom;
+    background-size: 100% 50%;
+    background-repeat: no-repeat;
+    backdrop-filter: blur(10px);
+}
+
+.main {
+    max-width: 1000px;
+    height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.heading {
+    margin-top: 200px;
+    color: black;
+    font-size: 50px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bolder;
+}
+.subtitle {
+    font-size: 18px;
+    color: gray;
+    margin-bottom: 100px;
+    text-align: center;
+}
+
+.buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    height: auto;
+}
+.button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 100px;
+    padding: 10px;
+    border-radius: 20px;
+    border: solid 2px rgb(0, 0, 0);
+    box-shadow: rgba(0, 0, 0, 0.353) 0px 0px 20px;
+    transition: 0.2s;
+    filter: contrast(0.5);
+}
+.button img {
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
+    transition: 0.2s;
+}
+.button label {
+    font-size: 20px;
+    font-weight: bold;
+}
+.button:hover {
+    scale: 1.1;
+}
+a {
+    text-decoration: none;
+    color: black;
+}

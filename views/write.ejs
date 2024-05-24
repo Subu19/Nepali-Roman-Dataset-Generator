@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Write</title>
+        <link rel="stylesheet" href="./css/write.css" />
+    </head>
+    <body>
+        <div class="main">
+            <h1 class="text-center">Add your own sentence ✏️</h1>
+            <form action="/write" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return validate()">
+                <input oninput="checkValidation()" name="sentence" id="textarea" placeholder="Write a sentence.."></input>
+                <button>Submit Sentence</button>
+            </form>
+        </div>
+        <script src="./js/write.js"></script>
+
+    </body>
+</html>

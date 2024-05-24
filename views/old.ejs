@@ -1,0 +1,101 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Audio Transcription</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+            }
+            .audio-container {
+                display: flex;
+                flex-direction: column;
+
+                gap: 20px;
+                margin-bottom: 20px;
+            }
+            .audio-container p {
+                margin: 0;
+            }
+            button {
+                height: 30px;
+                width: 100px;
+                cursor: pointer;
+            }
+            .next {
+                background-color: black;
+                color: white;
+            }
+            .save {
+                background-color: greenyellow;
+                color: black;
+            }
+            .submit {
+                background-color: green;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Audio Transcription</h1>
+
+        <div class="audio-container" id="audio-container">
+            <!-- let javascript do its work -->
+        </div>
+
+        <button class="submit">Submit</button>
+        <hr />
+        <h1>Dataset</h1>
+        <div class="dataset" id="dataset"></div>
+        <script>
+            const rawAudioFiles = "<%=audioFiles%>";
+            const audioFiles = rawAudioFiles.split(",");
+            let currentAudioIndex = 0;
+            let dataset = [];
+            function next() {
+                currentAudioIndex++;
+                loadAudio();
+            }
+            function loadAudio() {
+                const audiocontainner = document.getElementById("audio-container");
+                audiocontainner.innerHTML = `
+                    <h2>File: ${audioFiles[currentAudioIndex]}</h2>
+                    <audio controls autoplay>
+                    <source src="audio/${audioFiles[currentAudioIndex]}" type="audio/mp3" />
+
+                    Your browser does not support the audio element.
+                    </audio>
+                    <div>
+                        <textarea id="transcription" rows="4" cols="50" placeholder="Enter transcription here..."></textarea>
+                    </div>
+                    <div class="buttons">
+                        <button class="next" onclick="next()">Next</button>
+                        <button class="save" onclick="save()">Save</button>
+                    </div>
+                `;
+            }
+
+            function save() {
+                const text = document.getElementById("transcription").value;
+                const newData = {
+                    audio: audioFiles[currentAudioIndex],
+                    text: text,
+                };
+                const checkAudio = dataset.find((data) => data.audio === audioFiles[currentAudioIndex]);
+                if (checkAudio) {
+                    checkAudio.text = text;
+                } else {
+                    dataset.push(newData);
+                }
+                updateViewDataSet();
+            }
+
+            function updateViewDataSet() {
+                const datasetContainner = document.getElementById("dataset");
+                datasetContainner.innerHTML = `${JSON.stringify(dataset)}`;
+            }
+            window.onload = loadAudio;
+        </script>
+    </body>
+</html>
