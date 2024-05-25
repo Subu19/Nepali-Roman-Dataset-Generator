@@ -10,6 +10,7 @@ body {
     flex-direction: column;
     justify-content: center;
     gap: 20px;
+    padding: 10px;
 }
 .heading {
     margin-top: 100px;
