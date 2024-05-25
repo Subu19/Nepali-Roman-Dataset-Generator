@@ -7,6 +7,9 @@ body {
     background-size: 100% 50%;
     background-repeat: no-repeat;
     backdrop-filter: blur(10px);
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
 }
 
 .main {
@@ -19,7 +22,7 @@ body {
     padding: 10px;
 }
 .heading {
-    margin-top: 200px;
+    margin-top: 10%;
     color: black;
     font-size: 50px;
     margin-bottom: 20px;
@@ -29,7 +32,7 @@ body {
 .subtitle {
     font-size: 18px;
     color: gray;
-    margin-bottom: 100px;
+    margin-bottom: 10%;
     text-align: center;
 }
 

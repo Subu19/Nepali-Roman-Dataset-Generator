@@ -13,14 +13,14 @@ body {
     padding: 10px;
 }
 .heading {
-    margin-top: 100px;
+    margin-top: 10%;
     font-size: 50px;
     font-weight: bold;
 }
 .subtitle {
     font-size: 20px;
     color: gray;
-    margin-bottom: 50px;
+    margin-bottom: 10%;
 }
 .text-center {
     text-align: center;
