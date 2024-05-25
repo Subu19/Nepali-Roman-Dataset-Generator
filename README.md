@@ -14,7 +14,7 @@ This project is designed to collect and manage voice clips from the public to cr
 
 1. Clone the repository:
     ```bash
-    git clone [https://github.com/Subu19/Nepali-Roman-Dataset-Generator](https://github.com/Subu19/Nepali-Roman-Dataset-Generator.git)
+    git clone https://github.com/Subu19/Nepali-Roman-Dataset-Generator.git
     ```
 2. Navigate to the project directory:
     ```bash
