@@ -1,8 +1,6 @@
 const express = require("express");
-const path = require("path");
 const { Sentence } = require("../utils/models/sentences");
 const router = express.Router();
-const fs = require("fs");
 
 router.get("/", async (req, res, next) => {
     const userIp = req.headers["x-forwarded-for"] || req.headers["cf-connecting-ip"] || req.ip;

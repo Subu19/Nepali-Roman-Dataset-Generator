@@ -4,6 +4,12 @@ const { Sentence } = require("../utils/models/sentences");
 const router = express.Router();
 const fs = require("fs");
 
+// Ensure dataset directory exists
+if (!fs.existsSync(path.join(__dirname, "../dataset", "clips"))) {
+    fs.mkdirSync(path.join(__dirname, "../dataset", "clips"), { recursive: true });
+}
+const CLIP_UPLOAD_PATH = path.join(__dirname, "../dataset", "clips");
+
 // Path to your dataset file
 const DATASET_FILE = path.join(__dirname, "../dataset", "dataset.csv");
 const csvWriter = require("csv-write-stream");
@@ -29,22 +35,16 @@ router.post("/", async (req, res) => {
                 return res.status(404).send("Sentence not found");
             }
 
-            const uploadPath = path.join(__dirname, "../dataset", "clips", file.name);
             sentence.hasAudio = true;
             sentence.audioName = file.name;
 
             await sentence.save();
-            file.mv(uploadPath, (err) => {
+            file.mv(CLIP_UPLOAD_PATH + "/" + file.name, (err) => {
                 if (err) {
                     return res.status(500).send(err);
                 }
 
-                writer.write({
-                    audio_path: "clips/" + file.name,
-                    transcription: sentence.text,
-                });
-
-                res.send("File uploaded to " + uploadPath);
+                res.send("File uploaded to " + CLIP_UPLOAD_PATH + "/" + file.name);
             });
         } catch (error) {
             console.error(error);

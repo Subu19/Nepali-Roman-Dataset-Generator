@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { Sentence } = require("../utils/models/sentences");
 const fs = require("fs");
+const path = require("path");
 // Route to serve the index page
 router.get("/", (req, res) => {
     res.render("index");

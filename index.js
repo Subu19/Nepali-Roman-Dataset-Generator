@@ -28,35 +28,14 @@ const indexRoutes = require("./routes/index");
 const recordRoutes = require("./routes/record");
 const uploadRoutes = require("./routes/upload");
 const verifyRoutes = require("./routes/verify");
+const downloadRoutes = require("./routes/download");
 // Use routes
 app.use("/", indexRoutes);
 app.use("/record", recordRoutes);
 app.use("/upload", uploadRoutes);
 app.use("/verify", verifyRoutes);
+app.use("/generate", downloadRoutes);
 app.use("/clips", express.static(path.join(__dirname, "dataset", "clips")));
-
-// Path to your dataset file
-const DATASET_FILE = path.join(__dirname, "dataset", "dataset.csv");
-
-// Ensure dataset directory exists
-if (!fs.existsSync(path.join(__dirname, "dataset", "clips"))) {
-    fs.mkdirSync(path.join(__dirname, "dataset", "clips"), { recursive: true });
-}
-
-// Initialize CSV writer
-let writer;
-if (!fs.existsSync(DATASET_FILE)) {
-    writer = csvWriter({ headers: ["audio_path", "transcription"] });
-    writer.pipe(fs.createWriteStream(DATASET_FILE));
-} else {
-    writer = csvWriter({ sendHeaders: false });
-    writer.pipe(fs.createWriteStream(DATASET_FILE, { flags: "a" }));
-}
-
-// Handle server shutdown to close the CSV writer
-process.on("exit", () => {
-    writer.end();
-});
 
 // Start the server
 app.listen(port, () => {
