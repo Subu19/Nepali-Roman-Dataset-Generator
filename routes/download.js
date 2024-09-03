@@ -14,15 +14,18 @@ const DATASET_DIR = process.env.DATASET_PATH;
 
 // Initialize CSV writer
 const InitializeWriter = () => {
-    let writer;
+    let csv_writer, audio_writer, text_writer;
     if (!fs.existsSync(DATASET_FILE)) {
-        writer = csvWriter({ headers: ["audio_path", "transcription"] });
-        writer.pipe(fs.createWriteStream(DATASET_FILE));
+        csv_writer = csvWriter({ headers: ["audio_path", "transcription"] });
+        csv_writer.pipe(fs.createWriteStream(DATASET_FILE));
     } else {
-        writer = csvWriter({ sendHeaders: true });
-        writer.pipe(fs.createWriteStream(DATASET_FILE, { flags: "w" }));
+        csv_writer = csvWriter({ sendHeaders: true });
+        csv_writer.pipe(fs.createWriteStream(DATASET_FILE, { flags: "w" }));
     }
-    return writer;
+    audio_writer = fs.createWriteStream(DATASET_DIR + "/audio_paths");
+    text_writer = fs.createWriteStream(DATASET_DIR + "/text");
+
+    return { csv_writer, audio_writer, text_writer };
 };
 
 router.get("/", async (req, res, next) => {
@@ -34,13 +37,15 @@ router.get("/", async (req, res, next) => {
 
         if (sentences) {
             // Prepare CSV file
-            const writer = InitializeWriter();
+            const { csv_writer, audio_writer, text_writer } = InitializeWriter();
             sentences.forEach(async (sentence, i) => {
                 if (fs.existsSync(DATASET_DIR + "/clips/" + sentence.audioName)) {
-                    writer.write({
+                    csv_writer.write({
                         audio_path: "clips/" + sentence.audioName,
                         transcription: sentence.text,
                     });
+                    audio_writer.write(sentence._id + " " + sentence.audioName + "\n");
+                    text_writer.write(sentence._id + " " + sentence.text + "\n");
                 }
             });
 
