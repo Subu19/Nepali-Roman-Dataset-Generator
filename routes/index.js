@@ -95,11 +95,10 @@ router.post("/dislike", async (req, res) => {
         await sentence.save();
 
         if (sentence.dislikes.length >= 2) {
-            const filePath = path.join(__dirname, "../dataset", "clips", sentence.audioName);
+            const filePath = path.join(process.env.DATASET_PATH, "clips", sentence.audioName);
             if (fs.existsSync(filePath)) {
                 fs.unlinkSync(filePath);
             }
-
             await Sentence.deleteOne({ _id: sentence._id });
         }
 

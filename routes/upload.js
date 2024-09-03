@@ -5,13 +5,13 @@ const router = express.Router();
 const fs = require("fs");
 
 // Ensure dataset directory exists
-if (!fs.existsSync(path.join(__dirname, "../dataset", "clips"))) {
-    fs.mkdirSync(path.join(__dirname, "../dataset", "clips"), { recursive: true });
+if (!fs.existsSync(path.join(process.env.DATASET_PATH, "clips"))) {
+    fs.mkdirSync(path.join(process.env.DATASET_PATH, "clips"), { recursive: true });
 }
-const CLIP_UPLOAD_PATH = path.join(__dirname, "../dataset", "clips");
+const CLIP_UPLOAD_PATH = path.join(process.env.DATASET_PATH, "clips");
 
 // Path to your dataset file
-const DATASET_FILE = path.join(__dirname, "../dataset", "dataset.csv");
+const DATASET_FILE = path.join(process.env.DATASET_PATH, "dataset.csv");
 const csvWriter = require("csv-write-stream");
 
 // Initialize CSV writer

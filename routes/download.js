@@ -7,9 +7,9 @@ const archiver = require("archiver");
 const path = require("path");
 
 // Path to dataset file
-const DATASET_FILE = path.join(__dirname, "../dataset", "dataset.csv");
+const DATASET_FILE = process.env.DATASET_PATH + "/dataset.csv";
 const OUTPUT_DATASET = path.join(__dirname, "../dataset.zip");
-const DATASET_DIR = path.join(__dirname, "../dataset");
+const DATASET_DIR = process.env.DATASET_PATH;
 
 // Initialize CSV writer
 const InitializeWriter = () => {
@@ -89,7 +89,7 @@ const MakeZIP = async () => {
 
         //start archiving
         archive.pipe(output);
-        archive.directory("dataset/", false);
+        archive.directory(process.env.DATASET_PATH, false);
         archive.finalize();
     });
 };
