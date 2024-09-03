@@ -1,5 +1,5 @@
 static/audio
 node_modules
-dataset/clips/*
+dataset
 config.json
 .vscode
