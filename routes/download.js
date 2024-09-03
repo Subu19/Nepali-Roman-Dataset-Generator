@@ -5,6 +5,7 @@ const csvWriter = require("csv-write-stream");
 const fs = require("fs");
 const archiver = require("archiver");
 const path = require("path");
+const { updateDatasetHF } = require("../utils/updateHuggingFace");
 
 // Path to dataset file
 const DATASET_FILE = process.env.DATASET_PATH + "/dataset.csv";
@@ -48,6 +49,7 @@ router.get("/", async (req, res, next) => {
                 .then(() => {
                     console.log("sending");
                     res.download(OUTPUT_DATASET);
+                    if (process.env.UPDATE_HUGGING_FACE) updateDatasetHF();
                 })
                 .catch((err) => {
                     res.status(500).send(err);
