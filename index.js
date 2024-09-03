@@ -3,12 +3,11 @@ const bodyParser = require("body-parser");
 const fileupload = require("express-fileupload");
 const cors = require("cors");
 const path = require("path");
-const config = require("./config.json");
 require("dotenv").config();
 
 // Initialize Express app
 const app = express();
-const port = config.port;
+const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
